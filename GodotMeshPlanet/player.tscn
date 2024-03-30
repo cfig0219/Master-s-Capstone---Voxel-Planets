@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc1ybeq5cfbir"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_j5gva"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_k6gqe"]
+radius = 0.35
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_m6dqh"]
+points = PackedVector3Array(0.223309, 0.896623, 0.103721, -0.337198, -0.702061, -0.0738964, -0.337534, -0.702762, 0.0723161, 0.310749, -0.801262, 0.0436457, -0.0738964, 0.702061, -0.337198, -0.16127, 0.700536, 0.305571, 0.0725934, -0.705427, 0.337223, 0.159308, -0.699184, -0.306633, -0.312854, 0.802421, -0.0156505, 0.305573, 0.700541, -0.161271, 0.271925, 0.68908, 0.21446, -0.163457, -0.828337, -0.252249, -0.163719, -0.829673, 0.251001, -0.273692, 0.660736, -0.216253, -0.076791, 0.973148, -0.10719, 0.105646, -0.974166, 0.0752147, 0.0725934, 0.705427, 0.337223, 0.159305, 0.699172, -0.306627, -0.16068, -0.697961, -0.306097, 0.333009, -0.667538, -0.102346, 0.21446, -0.68908, 0.271925, 0.333438, 0.668396, 0.100824, -0.297834, 0.594163, 0.183049, -0.216924, -0.662794, 0.272955, -0.106631, 0.937716, 0.165455, -0.10719, -0.973148, -0.076791, 0.104936, -0.937366, -0.167048, 0.333438, -0.668396, 0.100824, 0.0723161, -0.702761, -0.337534, 0.104937, 0.937368, -0.167048, -0.102345, -0.667533, 0.333007, -0.337198, 0.702061, -0.0738964)
+
+[node name="Player" type="RigidBody3D"]
+disable_mode = 2
+contact_monitor = true
+lock_rotation = true
+script = ExtResource("1_j5gva")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_k6gqe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_m6dqh")
+
+[node name="TwistPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="PitchPivot" type="Node3D" parent="TwistPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="TwistPivot/PitchPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.49012e-08, 0, -1.49012e-08, 1, 0, 5.96046e-08, 3)
+far = 100000.0
