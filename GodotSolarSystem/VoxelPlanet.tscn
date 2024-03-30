@@ -1,0 +1,276 @@
+[gd_scene load_steps=29 format=3 uid="uid://be73h11kp42pr"]
+
+[ext_resource type="Texture2D" uid="uid://bq6ti2wi0ap43" path="res://Textures/AraratMap.png" id="1_crpo3"]
+[ext_resource type="Texture2D" uid="uid://bhxi8u2dovxi1" path="res://Textures/GoriasMap.png" id="1_dab1r"]
+[ext_resource type="Texture2D" uid="uid://dutvscl23xls0" path="res://Textures/Dirt.png" id="2_feg2j"]
+[ext_resource type="Texture2D" uid="uid://eul2de2y8j10" path="res://Textures/Diamond.png" id="3_osn44"]
+[ext_resource type="Texture2D" uid="uid://dro8jnppkbw1p" path="res://Textures/CanaanMap.png" id="4_ls8iw"]
+[ext_resource type="Texture2D" uid="uid://c3mo4n6uqjcsj" path="res://Textures/NysaMap.png" id="5_ad5pe"]
+[ext_resource type="PackedScene" uid="uid://bc1ybeq5cfbir" path="res://player.tscn" id="7_cot1f"]
+
+[sub_resource type="Sky" id="Sky_5er8h"]
+
+[sub_resource type="Environment" id="Environment_mdc71"]
+background_mode = 2
+background_energy_multiplier = 1.34
+sky = SubResource("Sky_5er8h")
+glow_intensity = 3.15
+glow_strength = 0.55
+glow_bloom = 0.08
+glow_hdr_threshold = 1.46
+glow_hdr_scale = 1.81
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xy4k3"]
+albedo_texture = ExtResource("1_dab1r")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yfjqo"]
+albedo_texture = ExtResource("2_feg2j")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g8w6p"]
+albedo_texture = ExtResource("3_osn44")
+texture_filter = 0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1m6l1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xwtux"]
+albedo_color = Color(0.964706, 0.964706, 0, 1)
+emission_enabled = true
+emission = Color(0.941176, 0.937255, 0, 1)
+emission_energy_multiplier = 1.18
+emission_texture = ExtResource("4_ls8iw")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ub5qa"]
+material = SubResource("StandardMaterial3D_xwtux")
+radius = 1000.0
+height = 2000.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bex7w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_as2v1"]
+albedo_color = Color(0.454902, 1, 1, 1)
+emission_enabled = true
+emission = Color(0, 0.94902, 0.905882, 1)
+emission_texture = ExtResource("4_ls8iw")
+
+[sub_resource type="SphereMesh" id="SphereMesh_8wvgs"]
+material = SubResource("StandardMaterial3D_as2v1")
+radius = 1300.0
+height = 2600.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_blm4m"]
+albedo_color = Color(0.74902, 0.2, 0.0196078, 1)
+emission_enabled = true
+emission = Color(0.772549, 0.227451, 0.0941176, 1)
+emission_energy_multiplier = 0.74
+emission_texture = ExtResource("4_ls8iw")
+
+[sub_resource type="SphereMesh" id="SphereMesh_bj8dc"]
+material = SubResource("StandardMaterial3D_blm4m")
+radius = 500.0
+height = 1000.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kpiq0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cktv3"]
+albedo_color = Color(0.929412, 0.290196, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.396078, 0.133333, 1)
+emission_energy_multiplier = 0.74
+emission_texture = ExtResource("4_ls8iw")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ieuwf"]
+material = SubResource("StandardMaterial3D_cktv3")
+radius = 750.0
+height = 1500.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_weupm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gldua"]
+albedo_texture = ExtResource("1_crpo3")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4l45a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7yfae"]
+albedo_texture = ExtResource("5_ad5pe")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_354fn"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Sky" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3334)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Sky"]
+environment = SubResource("Environment_mdc71")
+
+[node name="Gorias" type="CSGCombiner3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -100, 0)
+use_collision = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Gorias"]
+transform = Transform3D(1, 0, 0, 0, 1, 8.71046e-05, 0, -8.71046e-05, 1, 0, 0, 0)
+radius = 10.0
+radial_segments = 64
+rings = 32
+material = SubResource("StandardMaterial3D_xy4k3")
+
+[node name="DiggingBlock" type="CSGBox3D" parent="Gorias"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0153519, 9.96066, -0.00483329)
+operation = 2
+size = Vector3(0.1, 0.1, 0.1)
+material = SubResource("StandardMaterial3D_yfjqo")
+
+[node name="BuildingBlock" type="CSGBox3D" parent="Gorias"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0916921, 10.0494, 0)
+size = Vector3(0.1, 0.1, 0.1)
+material = SubResource("StandardMaterial3D_g8w6p")
+
+[node name="GoriasGravityWell" type="Area3D" parent="Gorias"]
+disable_mode = 2
+priority = 2
+gravity_space_override = 3
+gravity_point = true
+gravity_point_unit_distance = 100.0
+gravity = 2.28
+linear_damp = 0.0
+angular_damp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Gorias/GoriasGravityWell"]
+transform = Transform3D(32, 0, 0, 0, 32, 0, 0, 0, 32, 0, 0, 0)
+shape = SubResource("SphereShape3D_1m6l1")
+
+[node name="Canaan" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -113.305, -3228.33)
+cast_shadow = 0
+mesh = SubResource("SphereMesh_ub5qa")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Canaan"]
+light_color = Color(1, 1, 0.784314, 1)
+light_energy = 20.0
+omni_range = 70000.0
+omni_attenuation = 0.248336
+
+[node name="CanaanGravityWell" type="Area3D" parent="Canaan"]
+gravity_space_override = 3
+gravity_point = true
+gravity_point_unit_distance = 1000.0
+gravity = 54.76
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Canaan/CanaanGravityWell"]
+transform = Transform3D(70000, 0, 0, 0, 70000, 0, 0, 0, 70000, 0, 0, 0)
+shape = SubResource("SphereShape3D_bex7w")
+
+[node name="Sol" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88147.8, -113.305, -55689.8)
+cast_shadow = 0
+mesh = SubResource("SphereMesh_8wvgs")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Sol"]
+light_color = Color(0.901961, 1, 1, 1)
+light_energy = 30.0
+omni_range = 100000.0
+omni_attenuation = 0.248336
+
+[node name="Sinai" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1316.15, -113.305, 5515.4)
+cast_shadow = 0
+mesh = SubResource("SphereMesh_bj8dc")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Sinai"]
+light_color = Color(0.996078, 0.356863, 0.270588, 1)
+light_energy = 7.0
+omni_range = 20000.0
+omni_attenuation = 0.248336
+
+[node name="SinaiGravityWell" type="Area3D" parent="Sinai"]
+priority = 1
+gravity_space_override = 3
+gravity_point = true
+gravity_point_unit_distance = 500.0
+gravity = 139.95
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sinai/SinaiGravityWell"]
+transform = Transform3D(7000, 0, 0, 0, 7000, 0, 0, 0, 7000, 0, 0, 0)
+shape = SubResource("SphereShape3D_kpiq0")
+
+[node name="Mizraim" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6140.5, -113.305, 12110.1)
+cast_shadow = 0
+mesh = SubResource("SphereMesh_ieuwf")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Mizraim"]
+light_color = Color(1, 0.564706, 0.392157, 1)
+light_energy = 13.0
+omni_range = 40000.0
+omni_attenuation = 0.248336
+
+[node name="Area3D" type="Area3D" parent="Mizraim"]
+priority = 1
+gravity_space_override = 3
+gravity_point = true
+gravity_point_unit_distance = 750.0
+gravity = 94.96
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mizraim/Area3D"]
+transform = Transform3D(12000, 0, 0, 0, 12000, 0, 0, 0, 12000, 0, 0, 0)
+shape = SubResource("SphereShape3D_weupm")
+
+[node name="Ararat" type="CSGCombiner3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 363, -97, 393)
+use_collision = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Ararat"]
+radius = 22.1
+radial_segments = 64
+rings = 32
+material = SubResource("StandardMaterial3D_gldua")
+
+[node name="DiggingBlock2" type="CSGBox3D" parent="Ararat"]
+transform = Transform3D(0.901177, 0.379222, -0.209931, 0.0305599, 0.427531, 0.903484, 0.432373, -0.820615, 0.373692, 8.92004, 8.75941, -18.122)
+operation = 2
+size = Vector3(0.1, 0.1, 0.1)
+material = SubResource("StandardMaterial3D_yfjqo")
+
+[node name="BuildingBlock2" type="CSGBox3D" parent="Ararat"]
+transform = Transform3D(0.901177, 0.379222, -0.209931, 0.0305599, 0.427531, 0.903484, 0.432373, -0.820615, 0.373692, 8.8562, 8.79842, -18.2393)
+size = Vector3(0.1, 0.1, 0.1)
+material = SubResource("StandardMaterial3D_g8w6p")
+
+[node name="AraratGravityWell" type="Area3D" parent="Ararat"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+priority = 2
+gravity_space_override = 3
+gravity_point = true
+gravity_point_unit_distance = 221.0
+gravity = 6.79
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ararat/AraratGravityWell"]
+transform = Transform3D(700, 0, 0, 0, 700, 0, 0, 0, 700, 0, 0, 0)
+shape = SubResource("SphereShape3D_4l45a")
+
+[node name="Nysa" type="CSGCombiner3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -707.464, -105.04, 51.8833)
+use_collision = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Nysa"]
+radius = 35.1
+radial_segments = 64
+rings = 32
+material = SubResource("StandardMaterial3D_7yfae")
+
+[node name="NysaGravityWell" type="Area3D" parent="Nysa"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+priority = 1
+gravity_space_override = 3
+gravity_point = true
+gravity_point_unit_distance = 356.0
+gravity = 16.6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Nysa/NysaGravityWell"]
+transform = Transform3D(3000, 0, 0, 0, 3000, 0, 0, 0, 3000, 0, 0, 0)
+shape = SubResource("SphereShape3D_354fn")
+
+[node name="Player" parent="." instance=ExtResource("7_cot1f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.975807, 1.49917, -2.28021)
+top_level = true
