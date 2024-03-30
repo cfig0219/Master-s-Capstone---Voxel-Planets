@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dh8fgrk1kre7w"]
+
+[ext_resource type="Script" path="res://World.gd" id="1_8dwol"]
+[ext_resource type="PackedScene" uid="uid://bc1ybeq5cfbir" path="res://player.tscn" id="1_p4syd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wykys"]
+
+[sub_resource type="Sky" id="Sky_bcnr6"]
+sky_material = SubResource("ProceduralSkyMaterial_wykys")
+
+[sub_resource type="Environment" id="Environment_otnme"]
+background_mode = 2
+sky = SubResource("Sky_bcnr6")
+ambient_light_color = Color(0.45098, 0.521569, 0.717647, 1)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_8dwol")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.976672, -0.110597, 0.184064, 0, 0.857167, 0.515038, -0.214735, -0.503023, 0.837172, 0, 0, 0)
+light_angular_distance = 1.82
+
+[node name="Sky" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Sky"]
+environment = SubResource("Environment_otnme")
+
+[node name="Player" parent="." instance=ExtResource("1_p4syd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.2367, 0.217953)
+
+[node name="Chunks" type="Node3D" parent="."]
