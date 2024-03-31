@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dh8fgrk1kre7w"]
+[gd_scene load_steps=12 format=3 uid="uid://dh8fgrk1kre7w"]
 
 [ext_resource type="PackedScene" uid="uid://bc1ybeq5cfbir" path="res://player.tscn" id="1_acxah"]
 [ext_resource type="Texture2D" uid="uid://bq6ti2wi0ap43" path="res://Textures/AraratMap.png" id="2_846kv"]
 [ext_resource type="Texture2D" uid="uid://eul2de2y8j10" path="res://Textures/Diamond.png" id="3_e07nk"]
 [ext_resource type="Texture2D" uid="uid://dutvscl23xls0" path="res://Textures/Dirt.png" id="4_dk8gy"]
+[ext_resource type="PackedScene" uid="uid://c2w8sn7mdsgfs" path="res://MeshPlanet.tscn" id="5_8obmx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wykys"]
 
@@ -58,3 +59,6 @@ material = SubResource("StandardMaterial3D_imt3l")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 39.5169, 1)
 operation = 2
 material = SubResource("StandardMaterial3D_nd1u3")
+
+[node name="Planet" parent="." instance=ExtResource("5_8obmx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -3)
