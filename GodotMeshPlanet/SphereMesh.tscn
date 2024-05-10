@@ -37,7 +37,7 @@ frequency = 0.6661
 [sub_resource type="Resource" id="Resource_udotf"]
 script = ExtResource("6_beqyg")
 radius = 256
-resolution = 64
+resolution = 32
 noise_map = SubResource("FastNoiseLite_mohmp")
 amplitude = 0.2
 min_height = 0.14
