@@ -10,12 +10,6 @@ var moveSpeed = 2.0 # player movement speed
 @onready var twist_pivot := $TwistPivot
 @onready var pitch_pivot := $TwistPivot/PitchPivot
 
-# for block placement
-@onready var raycast := $TwistPivot/PitchPivot/Camera3D/RayCast3D
-@onready var block_outline := $BlockOutline
-signal place_block(pos, t)
-signal break_block(pos)
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

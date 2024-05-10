@@ -130,12 +130,19 @@ func create_block(x, y, z):
 	if check_transparent(x, y, z + 1):
 		create_face(FRONT, x, y, z, block_info[Global.FRONT])
 	
+
 func create_face(i, x, y, z, texture_atlas_offset):
 	var offset = Vector3(x, y, z)
 	var a = vertices[i[0]] + offset
 	var b = vertices[i[1]] + offset
 	var c = vertices[i[2]] + offset
 	var d = vertices[i[3]] + offset
+	
+	# Apply transformations to the vertices to distort the cube into a spheroid
+	#a = distort_vertex(a)
+	#b = distort_vertex(b)
+	#c = distort_vertex(c)
+	#d = distort_vertex(d)
 	
 	var uv_offset = texture_atlas_offset / Global.TEXTURE_ATLAS_SIZE
 	var height = 1.0 / Global.TEXTURE_ATLAS_SIZE.y
@@ -148,6 +155,29 @@ func create_face(i, x, y, z, texture_atlas_offset):
 	
 	st.add_triangle_fan(([a, b, c]), ([uv_a, uv_b, uv_c]))
 	st.add_triangle_fan(([a, c, d]), ([uv_a, uv_c, uv_d]))
+	
+# distorts the chunk into a sphere shape
+func distort_vertex(vertex):
+	var x = vertex.x
+	var y = vertex.y
+	var z = vertex.z
+	
+	# obtains the domensions of the current chunk
+	var x_dim = (Global.DIMENSION.x)/2
+	var z_dim = (Global.DIMENSION.z)/2
+	x = x - x_dim # sets the center x and z coords to (0,0)
+	z = z - z_dim
+	
+	# curve factor
+	var curve = 0.01
+
+	# distorts the current chunk into sphere segment
+	x = ((x * y) / 40)
+	y = y - (((abs(x))**2) * curve) - (((abs(z))**2) * (curve/1.5))
+	z = ((z * y) / 40)
+	
+	return Vector3(x, y, z)
+
 
 func set_chunk_position(pos):
 	_chunk_position = pos
