@@ -13,10 +13,16 @@ class_name PlanetFace
 var arrays := []
 # the face's bounding box location
 var box_location = Vector3.ZERO
+var subchild_coordinates = []
 
+
+# helper function to generate parent planet face
+func generate_face(planet_data : PlanetData, resolution : int):
+	regenerate_mesh(planet_data, resolution, 0, resolution, 0, resolution)
 
 # generates the mesh for the current face
-func regenerate_mesh(planet_data : PlanetData, resolution : int):
+# the start and end determine what portion of the face gets generated
+func regenerate_mesh(planet_data : PlanetData, resolution : int, y_start: int, y_end: int, x_start : int, x_end : int):
 	arrays.resize(Mesh.ARRAY_MAX)
 	
 	# applies texture to planet
@@ -44,8 +50,9 @@ func regenerate_mesh(planet_data : PlanetData, resolution : int):
 	var axisA := Vector3(normal.y, normal.z, normal.x)
 	var axisB : Vector3 = normal.cross(axisA)
 	
-	for y in range(resolution):
-		for x in range(resolution):
+	# generates the current face at the specified range
+	for y in range(y_start, y_end):
+		for x in range(x_start, x_end):
 			var i : int = x + y * resolution
 			var percent := Vector2(x,y) / (resolution-1)
 			var pointOnUnitCube : Vector3 = normal + (percent.x-0.5) * 2.0 * axisA + (percent.y-0.5) * 2.0 * axisB
@@ -94,26 +101,83 @@ func regenerate_mesh(planet_data : PlanetData, resolution : int):
 	
 	
 # updates the mesh during runtime
-func _update_mesh(arrays : Array):
+func _update_mesh(pt_arrays : Array):
 	var _mesh := ArrayMesh.new()
-	_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, pt_arrays)
 	self.mesh = _mesh
 	
-# gets the normal of the current face
+# sets the location of the face's assigned bounding box
+func set_face_location(radius : int):
+	box_location = self.get_global_position() + (normal * Vector3(radius, radius, radius))
+	
+func get_face_location():
+	return box_location
+	
 func get_normal():
 	return normal
 	
-# sets the location of the face's assigned bounding box
-func set_box_location(location : Vector3):
-	box_location = location
+func get_child_locations(child_locations : Array):
+	subchild_coordinates = child_locations
+	return subchild_coordinates
 	
-func get_box_location():
-	return box_location
 	
-	'''
-	# adds physics to the terrain
-	var static_body = StaticBody3D.new()
-	add_child(static_body)
-	var collision_shape = CollisionShape3D.new()
-	collision_shape.shape = mesh.create_convex_shape()
-	static_body.add_child(collision_shape)'''
+# generates the children of the face
+# face child code order is determined in BoundingBox function set_child_location()
+func sub_faces(planet_data : PlanetData, resolution : int):
+	if subchild_coordinates != []:
+		# erases current parent face
+		regenerate_mesh(planet_data, 4, 0, 0, 0, 0)
+		
+		# generates the child faces
+		var child_face1 = self.duplicate()
+		child_face1.regenerate_mesh(planet_data, resolution, 0, (resolution/2.0)+1, 0, (resolution/2.0)+1)
+		self.add_child(child_face1) # face child 00
+		
+		var child_face2 = child_face1.duplicate()
+		child_face2.regenerate_mesh(planet_data, resolution, 0, (resolution/2.0)+1, resolution/2.0, resolution)
+		self.add_child(child_face2) # face child 01
+		
+		var child_face3 = child_face1.duplicate()
+		child_face3.regenerate_mesh(planet_data, resolution, resolution/2.0, resolution, 0, (resolution/2.0)+1)
+		self.add_child(child_face3) # face child 10
+		
+		var child_face4 = child_face1.duplicate()
+		child_face4.regenerate_mesh(planet_data, resolution, resolution/2.0, resolution, resolution/2.0, resolution)
+		self.add_child(child_face4) # face child 11
+		
+
+# determines if the player distance to the current bounding box is the shortest
+func is_closest_child(child_position : Vector3, player_position : Vector3):
+	if player_position != Vector3(0, 0, 0):
+		# populates a distances array using the information in the box coordinates array
+		var distances = []
+		for coor in subchild_coordinates:
+			distances.append(Global.player_position.distance_to(coor))
+		
+		# obtains shortest distance from distances list
+		var shortest = distances.min()
+		var curr_distance = player_position.distance_to(child_position)
+		var is_shortest = false
+		
+		# determines if the current distance is the shortest one
+		for dist in distances:
+			if curr_distance == shortest:
+				is_shortest = true
+				distances = [shortest] # erases all non-shortest positions
+		#print("current distance: ", curr_distance, " shortest distance: ", shortest, " is shortest: ", is_shortest)
+		return is_shortest
+
+# modifies an individual child face
+func alter_subface(index : int, planet_data : PlanetData, resolution : int):
+	var current_children = self.get_children()
+	if subchild_coordinates != []:
+		# determines what child to modify
+		if index == 0:
+			current_children[0].regenerate_mesh(planet_data, resolution, 0, (resolution/2.0)+1, 0, (resolution/2.0)+1)
+		if index == 1:
+			current_children[1].regenerate_mesh(planet_data, resolution, 0, (resolution/2.0)+1, resolution/2.0, resolution)
+		if index == 2:
+			current_children[2].regenerate_mesh(planet_data, resolution, resolution/2.0, resolution, 0, (resolution/2.0)+1)
+		if index == 3:
+			current_children[3].regenerate_mesh(planet_data, resolution, resolution/2.0, resolution, resolution/2.0, resolution)
+	#print(" altered distance: ", current_children[index])
