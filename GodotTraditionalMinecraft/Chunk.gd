@@ -182,7 +182,6 @@ func distort_vertex(vertex):
 
 func set_chunk_position(pos : Vector3):
 	_chunk_position = Vector2(pos.x, pos.z)
-	print(_chunk_position)
 	var translation = Vector3(pos.x, pos.y, pos.z) * Global.DIMENSION
 	
 	# moves chunk to new position
