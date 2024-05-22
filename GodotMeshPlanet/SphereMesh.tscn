@@ -1,0 +1,49 @@
+[gd_scene load_steps=11 format=3 uid="uid://dh8fgrk1kre7w"]
+
+[ext_resource type="PackedScene" uid="uid://bc1ybeq5cfbir" path="res://player.tscn" id="1_acxah"]
+[ext_resource type="Script" path="res://World.gd" id="1_ci48f"]
+[ext_resource type="PackedScene" uid="uid://c2w8sn7mdsgfs" path="res://Planet/MeshPlanet.tscn" id="5_8obmx"]
+[ext_resource type="Script" path="res://Planet/PlanetData.gd" id="6_beqyg"]
+[ext_resource type="Texture2D" uid="uid://c3bowbfrlmqgv" path="res://Planet/PlanetGradient.tres" id="6_gd2jh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wykys"]
+
+[sub_resource type="Sky" id="Sky_bcnr6"]
+sky_material = SubResource("ProceduralSkyMaterial_wykys")
+
+[sub_resource type="Environment" id="Environment_otnme"]
+background_mode = 2
+sky = SubResource("Sky_bcnr6")
+ambient_light_color = Color(0.45098, 0.521569, 0.717647, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mohmp"]
+noise_type = 3
+frequency = 0.6661
+
+[sub_resource type="Resource" id="Resource_udotf"]
+script = ExtResource("6_beqyg")
+radius = 256
+resolution = 32
+noise_map = SubResource("FastNoiseLite_mohmp")
+amplitude = 0.2
+min_height = 0.14
+planet_color = ExtResource("6_gd2jh")
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_ci48f")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.976672, -0.110597, 0.184064, 0, 0.857167, 0.515038, -0.214735, -0.503023, 0.837172, 0, 0, 0)
+light_angular_distance = 1.82
+
+[node name="Sky" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Sky"]
+environment = SubResource("Environment_otnme")
+
+[node name="Player" parent="." instance=ExtResource("1_acxah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, -5)
+
+[node name="Planet" parent="." instance=ExtResource("5_8obmx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -115.48, -249.004, -1397.84)
+planet_data = SubResource("Resource_udotf")
