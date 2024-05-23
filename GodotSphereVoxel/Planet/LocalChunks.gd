@@ -159,7 +159,7 @@ func chunk_matrix(node_location : Vector3, node_rotation : Vector3, surface_coor
 		var child = box_children[child_index]
 		var chunk_position = chunk_positions[child_index]
 		var global_location = child.get_global_position()
-		global_locations.append(floor(global_location))
+		global_locations.append(global_location)
 		position_to_global_location[chunk_position] = global_location
 		
 		if first_chunks == false:
