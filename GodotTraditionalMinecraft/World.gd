@@ -19,7 +19,7 @@ func generate_chunk(xpoint : int, zpoint : int):
 	var chunk_instance = chunk_scene.instantiate()
 	chunk_instance.set_chunk_position(chunks_global_position/16 + Vector3(xpoint, -0.5, zpoint))
 	chunks.add_child(chunk_instance)
-	chunk_instance.translate(Vector3(xpoint*16, -0.5, zpoint*16))
+	chunk_instance.set_global_position(Vector3(xpoint*16, -0.5, zpoint*16))
 
 	
 # Loads terrain on a separate thread from the player
