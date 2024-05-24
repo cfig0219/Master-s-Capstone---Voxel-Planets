@@ -27,12 +27,12 @@ var st = SurfaceTool.new()
 var mesh = null
 var mesh_instance = null
 
-var material = preload("res://Planet/PlanetMaterial.tres")
+var material = preload("res://Assets/new_standard_material_3d.tres")
 
 var _chunk_position = Vector3.ZERO
 var planet_center = Vector3.ZERO
 # adds terrain noise, note SimplexNoise does not work in godot4
-var noise = Global.terrain_noise
+var noise = FastNoiseLite.new()
 
 func get_chunk_position() -> Vector3:
 	return _chunk_position
@@ -62,7 +62,7 @@ func generate():
 					Vector3(i, 0 , k)
 					
 				# uses local x and z positions to obtain y noise variable
-				var height = int((noise.get_noise_3dv(global_pos/(Global.planet_radius/2))+1)/1 * (Global.DIMENSION.y) - 50)
+				var height = int((noise.get_noise_3dv(global_pos) + 1)/2 * Global.DIMENSION.y)
 				if height < 1:
 					height = 1
 				if height > Global.DIMENSION.y:
@@ -71,9 +71,9 @@ func generate():
 				var block = Global.AIR
 				
 				# uses height value to generate terrain noise
-				if j <= height - 3:
+				if j <= height - 4:
 					block = Global.AIR
-				elif j < height - 1 and j > height - 3:
+				elif j < height - 1 and j > height - 4:
 					block = Global.STONE
 				elif j < height:
 					block = Global.DIRT
