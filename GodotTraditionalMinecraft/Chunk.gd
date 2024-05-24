@@ -63,9 +63,9 @@ func generate():
 				var block = Global.AIR
 				
 				# uses height value to generate terrain noise
-				if j <= height - 3:
+				if j <= height - 4:
 					block = Global.AIR
-				elif j < height - 1 and j > height - 3:
+				elif j < height - 1 and j > height - 4:
 					block = Global.STONE
 				elif j < height:
 					block = Global.DIRT
