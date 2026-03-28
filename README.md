@@ -31,7 +31,7 @@ This repository is organized into four distinct Godot project folders. To run a 
 
 
 ## 🛠️ Tech Stack
-* **Game Engine:** Godot Engine (3.x/4.x)
+* **Game Engine:** Godot Engine (4.3)
 * **Language:** GDScript / C# (depending on specific optimization)
 * **Research Focus:** Real-time rendering optimization and memory management.
 
